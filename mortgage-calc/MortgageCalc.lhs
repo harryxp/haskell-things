@@ -48,8 +48,7 @@ So finally, monthly payment P is
 
   P = (r - 1) / (r ^ (12N + 1) - r) * L
 
-> import System.Environment (getArgs, getProgName)
-> import Text.Printf
+> module MortgageCalc (calcMonthlyPayment, calcAmortization) where
 
 > calcMonthlyPayment::Float -> Float -> Int -> Float
 > calcMonthlyPayment l i n = (r - 1) / (r ^ (12 * n + 1) - r) * l
@@ -85,38 +84,3 @@ paid off in principal.
 >               newBalance
 >               ((period + 1, principalPaidOfMonth, interestPaidOfMonth, newBalance) : tuples)
 
-Now we just need to print out things nicely...
-
-> outputStr::Float -> Int -> [(Int, Float, Float, Float)] -> String
-> outputStr p n a = concat
->   [ "Your monthly payment is $"
->   , show p
->   , ", and the total payment is $"
->   , show (p * 12 * fromIntegral n)
->   , ".\n"
->   , "Detailed amortization:\n"
->   , printf "%7s%22s%22s%22s\n" "Month #" "Principal" "Interest" "Balance"
->   , showAmortization a ]
->   where
->     showAmortization::[(Int, Float, Float, Float)] -> String
->     showAmortization = foldl showOneTuple ""
->     showOneTuple::String -> (Int, Float, Float, Float) -> String
->     showOneTuple accum (period, pPaid, iPaid, balance) =
->       printf "%7d%22.2f%22.2f%22.2f\n%s" period pPaid iPaid balance accum
-
-> usage progName =
->   concat ["Usage ./", progName, " <loan> <annualInterestRate> <years>"]
-
-> main =
->   getArgs                  >>=
->   \args     -> getProgName >>=
->   \progName -> case args of
->     [loan, annualInterestRate, years] ->
->       let l = read loan
->           i = read annualInterestRate
->           n = read years
->           p = (calcMonthlyPayment l i n)
->           a = (calcAmortization p l i n)
->       in
->         putStrLn $ outputStr p n a
->     otherwise                         -> putStrLn $ usage progName
