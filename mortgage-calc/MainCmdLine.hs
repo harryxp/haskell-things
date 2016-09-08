@@ -5,14 +5,15 @@ import MortgageCalc (calcMonthlyPayment, calcAmortization)
 
 outputStr::Float -> Int -> [(Int, Float, Float, Float)] -> String
 outputStr p n a = concat
-  [ "Your monthly payment is $"
+  [ "Detailed amortization:\n"
+  , printf "%7s%22s%22s%22s\n" "Month #" "Principal" "Interest" "Balance"
+  , showAmortization a
+  , "\n"
+  , "Your monthly payment is $"
   , show p
   , ", and the total payment is $"
   , show (p * 12 * fromIntegral n)
-  , ".\n"
-  , "Detailed amortization:\n"
-  , printf "%7s%22s%22s%22s\n" "Month #" "Principal" "Interest" "Balance"
-  , showAmortization a ]
+  , ".\n" ]
   where
     showAmortization::[(Int, Float, Float, Float)] -> String
     showAmortization = foldl showOneTuple ""
