@@ -15,15 +15,16 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Lib
+  exposed-modules:     MortgageCalc
   build-depends:       base >= 4.7 && < 5
   default-language:    Haskell2010
 
 executable MortgageCalc-exe
   hs-source-dirs:      app
-  main-is:             Main.hs
+  main-is:             MainCmdLine.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
+                     , flow >= 1.0.7
                      , MortgageCalc
   default-language:    Haskell2010
 

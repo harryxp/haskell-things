@@ -1,3 +1,4 @@
+import Flow ((|>))
 import System.Environment (getArgs, getProgName)
 import Text.Printf
 
@@ -35,6 +36,6 @@ main =
           p = (calcMonthlyPayment l i n)
           a = (calcAmortization p l i n)
       in
-        putStrLn $ outputStr p n a
-    otherwise                         -> putStrLn $ usage progName
+        outputStr p n a |> putStrLn
+    otherwise                         -> usage progName |> putStrLn
 
