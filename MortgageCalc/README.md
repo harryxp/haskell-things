@@ -1,2 +1,2 @@
 stack build
-stack exec MortgageCalc-exe
+stack exec MortgageCalc

@@ -23,19 +23,21 @@ outputStr p n a = concat
       printf "%7d%22.2f%22.2f%22.2f\n%s" period pPaid iPaid balance accum
 
 usage progName =
-  concat ["Usage ./", progName, " <loan> <annualInterestRate> <years>"]
+  concat [
+      "Usage: ", progName, " <loan> <annualInterestRate> <years>\n",
+      "For example, ", progName, " 400000 4.5 30" ]
 
 main =
   getArgs                  >>=
   \args     -> getProgName >>=
   \progName -> case args of
-    [loan, annualInterestRate, years] ->
+    [ loan, annualInterestRate, years ] ->
       let l = read loan
-          i = read annualInterestRate
+          i = (read annualInterestRate) / 100
           n = read years
           p = (calcMonthlyPayment l i n)
           a = (calcAmortization p l i n)
       in
         outputStr p n a |> putStrLn
-    otherwise                         -> usage progName |> putStrLn
+    otherwise                          -> usage progName |> putStrLn
 
