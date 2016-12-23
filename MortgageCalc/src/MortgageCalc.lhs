@@ -50,7 +50,7 @@ So finally, monthly payment P is
 
 > module MortgageCalc (calcMonthlyPayment, calcAmortization) where
 
-> calcMonthlyPayment::Float -> Float -> Int -> Float
+> calcMonthlyPayment :: Float -> Float -> Int -> Float
 > calcMonthlyPayment l i n = (r - 1) / (r ^ (12 * n + 1) - r) * l
 >   where
 >     r = 1 / (1 + i / 12)
@@ -68,10 +68,10 @@ before payment.  This amount minus the balance from last month, is how much is
 paid off in principal.
 ...
 
-> calcAmortization::Float -> Float -> Float -> Int -> [(Int, Float, Float, Float)]
-> calcAmortization p l i n = _calcAmortization 0 l [(0, 0, 0, l)]
+> calcAmortization :: Float -> Float -> Float -> Int -> [(Int, Float, Float, Float)]
+> calcAmortization p l i n = calcAmortization' 0 l [(0, 0, 0, l)]
 >   where
->     _calcAmortization period balance tuples =
+>     calcAmortization' period balance tuples =
 >       if period >= n * 12
 >       then tuples
 >       else
@@ -79,7 +79,7 @@ paid off in principal.
 >             principalPaidOfMonth = p - interestPaidOfMonth
 >             newBalance = balance * (1 + i / 12) - p
 >         in
->             _calcAmortization
+>             calcAmortization'
 >               (period + 1)
 >               newBalance
 >               ((period + 1, principalPaidOfMonth, interestPaidOfMonth, newBalance) : tuples)
