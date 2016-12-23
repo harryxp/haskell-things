@@ -9,21 +9,18 @@ import MortgageCalc (calcMonthlyPayment, calcAmortization)
  - exit code
  -}
 
-main =
-  getArgs                  >>=
-  \args     -> getProgName >>=
-  \progName ->
-    case args of
-      [       loan, annualInterestRate, years ] ->
-        let (l, i, n) = readArgs loan annualInterestRate years
-        in calcMonthlyPayment l i n |> showMonthlyPayment n
-      [ "-v", loan, annualInterestRate, years ] ->
-        let (l, i, n) = readArgs loan annualInterestRate years
-            p = calcMonthlyPayment l i n
-            a = calcAmortization p l i n
-        in showMonthlyPayment n p ++ showAmortization a
-      otherwise                                 -> showUsage progName
-    |> putStrLn
+main = getArgs >>= \args -> getProgName >>= \progName ->
+  case args of
+    [       loan, annualInterestRate, years ] ->
+      let (l, i, n) = readArgs loan annualInterestRate years
+      in calcMonthlyPayment l i n |> showMonthlyPayment n
+    [ "-v", loan, annualInterestRate, years ] ->
+      let (l, i, n) = readArgs loan annualInterestRate years
+          p = calcMonthlyPayment l i n
+          a = calcAmortization p l i n
+      in showMonthlyPayment n p ++ showAmortization a
+    otherwise                                 -> showUsage progName
+  |> putStrLn
 
 readArgs :: String -> String -> String -> (Float, Float, Int)
 readArgs loan annualInterestRate years = (read loan, (read annualInterestRate) / 100, read years)
