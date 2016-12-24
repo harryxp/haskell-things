@@ -11,10 +11,12 @@ import GHCJS.DOM.Types
 import GHCJS.DOM.Document (getBody, createElementUnsafe, createTextNode)
 import GHCJS.DOM.Element (setInnerHTML)
 import GHCJS.DOM.Node (appendChild)
-import GHCJS.DOM.HTMLInputElement (getValueUnsafe, setType)
+import GHCJS.DOM.HTMLInputElement (getValueAsNumber, getValueUnchecked, setType)
 import GHCJS.DOM.EventM (on, mouseClientXY)
 import qualified GHCJS.DOM.Document as D (click)
 import qualified GHCJS.DOM.Element as E (click)
+
+import qualified Data.Text as T (unpack, Text)
 
 main = do
   Just doc <- currentDocument
@@ -25,24 +27,24 @@ main = do
   yearInput <- createElementUnsafe doc (Just "input") >>= unsafeCastTo HTMLInputElement
   calcBtn <- createElementUnsafe doc (Just "input") >>= unsafeCastTo HTMLInputElement
   setType calcBtn (toJSString "button")
+  output <- createElementUnsafe doc (Just "input") >>= unsafeCastTo HTMLInputElement
 
   appendChild body (Just loanInput)
   appendChild body (Just interestInput)
   appendChild body (Just yearInput)
   appendChild body (Just calcBtn)
 
-  --on calcBtn E.click $ do
-    --loan :: T.Text
-    --loan <- getValueUnsafe loanInput
-    --return ()
-    --interest <- getValueUnchecked interestInput
-    --year <- getValueUnchecked yearInput
+  on calcBtn E.click $ do
+    loan <- getValueAsNumber loanInput
+    interest <- getValueAsNumber interestInput
+    year <- getValueAsNumber yearInput
+    span <- createElementUnsafe doc (Just "span") >>= unsafeCastTo HTMLSpanElement
+    output <- createTextNode doc $ show year -- $ calcMonthlyPayment loan interest (round year)
+    appendChild span output
+    appendChild body (Just span)
+    return ()
 
     {-
-    let
-      loanStr = fromJSString loan
-      interestStr = fromJSString interest
-      yearStr = fromJSString year
     setInnerHTML body (Just "<h1>Kia ora (Hi)</h1>")
     on doc D.click $ do
         (x, y) <- mouseClientXY
