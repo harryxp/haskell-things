@@ -1,3 +1,5 @@
+module Main (main) where
+
 import Flow ((|>))
 import System.Environment (getArgs, getProgName)
 import Text.Printf (printf)

@@ -1,16 +1,14 @@
-name:                MortgageCalc
+name:                MortgageCalcWeb
 version:             0.1.0.0
 synopsis:            Initial project template from stack
 description:         Please see README.md
 homepage:            https://github.com/githubuser/MortgageCalc#readme
 license:             BSD3
-license-file:        LICENSE
 author:              Author name here
 maintainer:          example@example.com
 copyright:           2016 Author name here
 category:            Web
 build-type:          Simple
-extra-source-files:  README.md
 cabal-version:       >=1.10
 
 library
@@ -21,11 +19,14 @@ library
 
 executable MortgageCalc
   hs-source-dirs:      app
-  main-is:             MainCmdLine.hs
+  main-is:             MainWeb.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , flow >= 1.0.7
-                     , MortgageCalc
+                     , ghcjs-dom >= 0.7.0.4
+                     , ghcjs-dom-jsffi >= 0.7.0.4
+                     , mtl >= 2.2.1
+                     , MortgageCalcWeb
   default-language:    Haskell2010
 
 test-suite MortgageCalc-test
@@ -33,7 +34,7 @@ test-suite MortgageCalc-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
-                     , MortgageCalc
+                     , MortgageCalcWeb
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
