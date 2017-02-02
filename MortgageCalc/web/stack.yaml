@@ -16,7 +16,7 @@ packages:
 extra-deps:
 - flow-1.0.7
 - ghcjs-dom-0.7.0.4
-- ghcjs-dom-jsffi-0.7.0.4
+- ghcjs-dom-webkit-0.7.0.3
 
 flags: {}
 

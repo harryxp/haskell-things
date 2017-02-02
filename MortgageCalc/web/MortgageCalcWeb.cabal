@@ -24,7 +24,7 @@ executable MortgageCalc
   build-depends:       base
                      , flow >= 1.0.7
                      , ghcjs-dom >= 0.7.0.4
-                     , ghcjs-dom-jsffi >= 0.7.0.4
+                     , ghcjs-dom-webkit >= 0.7.0.3
                      , mtl >= 2.2.1
                      , text >= 1.2.2
                      , MortgageCalcWeb

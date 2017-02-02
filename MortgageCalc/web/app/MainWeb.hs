@@ -7,11 +7,11 @@ import Control.Concurrent.MVar (takeMVar, putMVar, newEmptyMVar)
 
 import GHCJS.DOM (syncPoint, currentDocument)
 import GHCJS.DOM.Types
-       (HTMLInputElement(..), HTMLParagraphElement(..), HTMLSpanElement(..), JSString, FromJSString, fromJSString, toJSString, unsafeCastTo)
+       (HTMLInputElement(..), HTMLParagraphElement(..), HTMLSpanElement(..), JSString(..), FromJSString, fromJSString, toJSString, unsafeCastTo, MouseEvent)
 import GHCJS.DOM.Document (getBody, createElementUnsafe, createTextNode)
 import GHCJS.DOM.Element (setInnerHTML)
 import GHCJS.DOM.Node (appendChild)
-import GHCJS.DOM.HTMLInputElement (getValueAsNumber, getValueUnchecked, setType)
+import GHCJS.DOM.HTMLInputElement (getValueAsNumber, getValueUnsafe, setType)
 import GHCJS.DOM.EventM (on, mouseClientXY)
 import qualified GHCJS.DOM.Document as D (click)
 import qualified GHCJS.DOM.Element as E (click)
@@ -35,11 +35,12 @@ main = do
   appendChild body (Just calcBtn)
 
   on calcBtn E.click $ do
-    loan <- getValueAsNumber loanInput
-    interest <- getValueAsNumber interestInput
-    year <- getValueAsNumber yearInput
+    -- getValueUnsafe :: HTMLInputElement -> IO JSString
+    getValueUnsafe loanInput >>= unsafeCastTo JSString
+    --interest <- getValueUnsafe interestInput
+    --year <- getValueUnsafe yearInput
     span <- createElementUnsafe doc (Just "span") >>= unsafeCastTo HTMLSpanElement
-    output <- createTextNode doc $ show year -- $ calcMonthlyPayment loan interest (round year)
+    output <- createTextNode doc $ show "" -- $ calcMonthlyPayment loan interest (round year)
     appendChild span output
     appendChild body (Just span)
     return ()
