@@ -22,14 +22,14 @@ main = getArgs >>= \args -> getProgName >>= \progName ->
           a = calcAmortization p l i n
       in showMonthlyPayment n p ++ showAmortization a
     otherwise                                 -> showUsage progName
-  |> putStrLn
+  |> putStr
 
 readArgs :: String -> String -> String -> (Float, Float, Int)
 readArgs loan annualInterestRate years = (read loan, (read annualInterestRate) / 100, read years)
 
 showMonthlyPayment :: Int -> Float -> String
 showMonthlyPayment n p =
-  printf "Your monthly payment is $%f, and the total payment is $%f." p (p * 12 * fromIntegral n)
+  printf "Your monthly payment is $%f, and the total payment is $%f.\n" p (p * 12 * fromIntegral n)
 
 showAmortization :: [(Int, Float, Float, Float)] -> String
 showAmortization a =
