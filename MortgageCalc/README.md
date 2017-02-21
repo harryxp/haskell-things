@@ -1,9 +1,12 @@
-Useful links:
+Mortgage Calculator in Haskell.
 
-    https://docs.haskellstack.org/en/stable/README/#quick-start-guide
-    https://docs.haskellstack.org/en/stable/ghcjs/
+This demonstrates how a command line interface and a web interface can share
+the same Haskell library.
 
-Standalone:
+See [ghcjs-playground](https://github.com/harryxp/ghcjs-playground) for general
+instructions for setting up a `ghcjs` project.
+
+Standalone (command line):
 
     cd standalone
     stack setup
@@ -19,3 +22,10 @@ Web:
     stack setup
 
     stack build
+    open index.html     # generated JS files are referenced by index.html
+
+TODO:
+
+* There's a small difference between results calculated by the two versions.  Find out why.
+* Move common library code to a proper place.
+
