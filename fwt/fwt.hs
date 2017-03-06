@@ -5,15 +5,13 @@
 
 import Data.List.Split (splitOn)
 import qualified Data.Time.Format as F
-import Data.Time.LocalTime (LocalTime, TimeZone, getCurrentTimeZone)
+import Data.Time.LocalTime (LocalTime)
 import System.Environment (getArgs)
 import System.Process (callProcess)
 
 main :: IO ()
 main =
-  getArgs >>= \args ->
-  getCurrentTimeZone >>=
-  (findWithTimestamps . handleArgs args)
+  getArgs >>= findWithTimestamps . handleArgs
 
 -- TODO support specifying a start time and a duration (in minute?)
 -- TODO path param
@@ -21,8 +19,8 @@ main =
 -- TODO locale
 -- TODO better error report
 -- TODO also support atime and ctime
-handleArgs         :: [String] -> TimeZone -> (String, String)
-handleArgs args tz =
+handleArgs :: [String] -> (String, String)
+handleArgs args =
   let
     locale                 =  F.defaultTimeLocale
     timeFormat             =  "%Y%m%d %H:%M:%S"
